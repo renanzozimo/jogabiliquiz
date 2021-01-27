@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Widget = styled.div`
   margin-top: 24px;
@@ -8,12 +8,13 @@ const Widget = styled.div`
   overflow: hidden;
 
   h1 {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 300;
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   h3 {
@@ -30,6 +31,60 @@ const Widget = styled.div`
     font-weight: 400;
     line-height: 1.4;
     color: ${({ theme }) => theme.colors.contrastText};
+  }
+
+  input {
+    border: 3px solid transparent;
+    width: 100%;
+    outline: 0 none;
+    padding: 8px 16px;
+    border-radius: 0;
+    margin-bottom: 24px;
+    margin-top: 8px;
+    transition: border-color 275ms ease-in-out;
+    will-change: border-color;
+
+    &:focus {
+      border-color: ${({ theme }) => theme.colors.secondary};
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: 0 none;
+    outline: 0 none;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.primary};
+    position: relative;
+    transition: transform 275ms ease-in-out, background-color 175ms ease-in-out;
+    transform: scale(1);
+    will-change: transform;
+
+    &:not([disabled]) {
+      background-color: ${({ theme }) => theme.colors.secondary};
+      cursor: pointer;
+      &:hover{
+        transform: scale(1.03);
+
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.1);
+      top: 0;
+      left: 0;
+      transition: opacity 275ms ease-in-out;
+      opacity: 0;
+    }
   }
 `;
 

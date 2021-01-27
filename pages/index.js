@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import db from '../db.json';
 
@@ -22,11 +22,13 @@ export const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('');
+
+  const isNotEmpty = (value) => !!value?.replace(/ /g, '').length;
+
   return (
     <QuizBackground backgroundImage={db.bg}>
-      <Head>
-        <title>{db.title}</title>
-      </Head>
       <QuizContainer>
         <QuizLogo />
         <Widget>
@@ -34,7 +36,25 @@ export default function Home() {
             <h1>{db.title}</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>{db.description}</p>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              router.push(`/quiz?name=${name}`);
+            }}
+            >
+              <label htmlFor="playerName">
+                Diga seu nome :D
+                <input
+                  id="playerName"
+                  name="playerName"
+                  maxLength="20"
+                  onChange={(e) => { setName(e.target.value); }}
+                />
+              </label>
+              <button type="submit" disabled={!isNotEmpty(name)}>
+                Jogar
+                {isNotEmpty(name) ? ` como ${name}` : ''}
+              </button>
+            </form>
           </Widget.Content>
         </Widget>
 
